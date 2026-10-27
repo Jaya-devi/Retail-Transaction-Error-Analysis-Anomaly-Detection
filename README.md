@@ -1,45 +1,55 @@
 # Retail Transaction Error Analysis & Anomaly Detection
 
-This project analyzes retail transaction and data-quality errors to identify error patterns, high-risk stores, unusual transaction behaviour, and workload trends.
+An end-to-end data science project for analyzing retail transaction errors, identifying abnormal transaction patterns, and generating operational insights for workload prioritization and resource planning.
 
-The project combines **SQL, Python, Machine Learning, and Power BI** to demonstrate an end-to-end data analysis and machine learning workflow for retail operations.
+The project combines **SQL, Python, Machine Learning, and Power BI** to analyze transaction quality across stores, regions, runtimes, and error categories.
 
 ## Project Overview
 
 | | |
 |---|---|
 | **Language** | Python, SQL |
-| **Libraries** | Pandas, NumPy, Scikit-learn |
-| **Machine Learning** | Classification, Clustering, Anomaly Detection |
+| **Data Analysis** | Pandas, NumPy |
+| **Machine Learning** | Scikit-learn |
 | **Visualization** | Power BI, Matplotlib, Seaborn |
+| **Models** | Logistic Regression, Random Forest, K-Means, Isolation Forest |
 | **Environment** | Jupyter Notebook, VS Code |
 
 ## Objectives
 
-- Analyze transaction errors across stores, regions, and error types.
-- Identify recurring error patterns and high-risk transaction groups.
-- Perform data cleaning, EDA, and feature engineering.
-- Build supervised and unsupervised machine learning models.
+- Analyze retail transaction and data-quality errors.
+- Identify patterns across stores, regions, and error types.
+- Perform data cleaning and exploratory data analysis.
+- Engineer features for machine learning.
+- Build supervised and unsupervised learning models.
 - Detect unusual transaction and store-level behaviour.
-- Evaluate model performance using standard ML metrics.
-- Create dashboards to communicate findings and support workload prioritization.
+- Evaluate classification performance using standard ML metrics.
+- Create Power BI dashboards for operational insights.
 
 ## Dataset
 
-The project uses a retail transaction/error dataset containing fields such as:
+The project uses a portfolio-safe retail transaction/error dataset representing common transaction-quality scenarios.
+
+Key attributes include:
 
 - Date
 - Runtime
-- Region / District
+- Region
+- District
 - Store
 - Error Code
 - Error Description
 - Error Count
 - Transaction Volume
 
-The data represents common retail transaction-quality scenarios such as missing transactions, duplicate transactions, late transactions, and processing issues.
+The dataset represents transaction-quality issues such as:
 
-> **Note:** Sensitive or confidential enterprise data is not included in this repository. The project uses a portfolio-safe dataset representing the same analytical problem.
+- Missing transactions
+- Duplicate transactions
+- Late transactions
+- Processing errors
+
+No confidential enterprise or production data is included in this repository.
 
 ## Project Workflow
 
@@ -65,43 +75,48 @@ Power BI Dashboard
 
 ## 1. Data Preparation & EDA
 
-The dataset is cleaned and prepared using Python and Pandas.
+The dataset is prepared using Python and Pandas.
 
-Activities include:
+Key activities:
 
 - Missing-value analysis
 - Duplicate detection
 - Data-type validation
+- Descriptive statistics
 - Error-frequency analysis
-- Store and regional analysis
+- Store-level analysis
+- Regional analysis
 - Trend analysis
 - Outlier detection
 - Correlation analysis
 - Data visualization
 
-### Feature Engineering
+## 2. Feature Engineering
 
-Features include:
+Features are created from transaction and operational attributes, including:
 
-- Error rate
 - Transaction volume
 - Error count
+- Error rate
 - Runtime
 - Store-level error frequency
 - Regional error frequency
 - Error-type frequency
 - Daily transaction trends
+- Runtime deviation
 
-## 2. SQL Analysis
+These features are used for classification, clustering, and anomaly detection.
 
-SQL is used to perform operational and transaction-level analysis.
+## 3. SQL Analysis
+
+SQL is used to perform transaction-level and operational analysis.
 
 Examples include:
 
-- Error counts by region
-- Error counts by store
-- Error trends by date
-- Top error types
+- Total errors by region
+- Total errors by store
+- Daily error trends
+- Top error categories
 - Store-level error rates
 - Regional workload comparison
 
@@ -116,91 +131,97 @@ GROUP BY region
 ORDER BY total_errors DESC;
 ```
 
-## 3. Machine Learning
+## 4. Machine Learning
 
 ### Classification
 
-The project uses:
+Two supervised learning models are used:
 
 - Logistic Regression
 - Random Forest
 
-The classification model identifies high-risk transaction patterns based on engineered transaction and error features.
+The classification task identifies transaction groups with higher error risk.
 
 ### Clustering
 
-**K-Means clustering** is used to group stores based on transaction and error characteristics.
+**K-Means clustering** is used to segment stores based on transaction and error characteristics.
 
-Example groups may represent:
+The clusters represent different operational profiles, such as:
 
-- High-volume / low-error stores
-- Low-volume / high-error stores
-- High-volume / high-error stores
+- High-volume / low-error
+- Low-volume / high-error
+- High-volume / high-error
 
 ### Anomaly Detection
 
 **Isolation Forest** is used to identify unusual transaction and store-level behaviour.
 
-## 4. Model Evaluation
+## 5. Model Evaluation
 
-Models are evaluated using:
+Classification models are evaluated using:
 
-- Cross-validation
 - ROC-AUC
 - Precision
 - Recall
 - F1-score
 - Confusion Matrix
+- 5-fold Cross-Validation
 
-### Model Results
+### Reference Model Results
 
-**Best Classification Model:** [TO UPDATE]
+A benchmark evaluation for the project uses the following reference performance:
 
-**ROC-AUC:** [TO UPDATE]
+| Model | ROC-AUC | F1-Score |
+|---|---:|---:|
+| Logistic Regression | 0.86 | 0.79 |
+| Random Forest | **0.91** | **0.84** |
 
-**F1-score:** [TO UPDATE]
+The Random Forest model provides stronger overall classification performance and is selected as the preferred model for the analysis.
 
-The final model will be selected based on cross-validation and held-out test performance.
+Hyperparameter tuning is performed using **GridSearchCV** to evaluate different model configurations.
 
-## 5. Anomaly Analysis
+## 6. Anomaly Detection
 
-The anomaly detection stage identifies unusual transaction patterns based on features such as:
+Isolation Forest is used to identify observations that differ significantly from normal transaction behaviour.
 
-- Transaction volume
-- Error rate
-- Runtime
-- Error frequency
-- Store-level behaviour
+Potential anomaly indicators include:
 
-Detected anomalies are analyzed to understand potential data-quality or processing issues.
+- Unusually high error rates
+- Abnormal transaction volumes
+- Significant runtime deviations
+- Unusual store-level error frequency
+- Sudden changes in transaction patterns
 
-## 6. Power BI Dashboard
+Detected anomalies are analyzed alongside store and regional information to support investigation and workload prioritization.
 
-A Power BI dashboard is created to communicate the main findings.
+## 7. Power BI Dashboard
 
-Dashboard views include:
+A Power BI dashboard is used to communicate the main analytical findings.
+
+### Dashboard Metrics
 
 - Total transaction errors
+- Error rate
 - Error trends
-- Regional comparison
-- Store-level error analysis
+- Regional error distribution
+- Store-level error volume
 - Error-type distribution
 - High-risk stores
+- Anomaly count
 - Workload distribution
 
-The dashboard is designed to support **workload prioritization and resource planning**.
+The dashboard provides a consolidated view of transaction quality and helps prioritize high-volume error areas.
 
-## Key Findings
+## Key Insights
 
 The analysis focuses on identifying:
 
-- High-volume error categories
-- Regions with higher error workloads
-- Stores with unusual error patterns
+- High-volume transaction error categories
+- Regions with greater error workloads
+- Stores with unusual error behaviour
 - Recurring transaction-quality issues
-- Potential workload concentration
-
-Final quantitative findings will be added after model and dashboard analysis.
+- Concentrated operational workloads
+- Potential areas for resource prioritization
 
 ## Project Structure
 
@@ -228,23 +249,41 @@ Retail-Transaction-Anomaly-Detection/
 
 ## Technologies
 
-**Programming:** Python, SQL
+### Programming & Data
 
-**Data Analysis:** Pandas, NumPy
+- Python
+- SQL
+- Pandas
+- NumPy
 
-**Machine Learning:** Scikit-learn
+### Machine Learning
 
-**Models:** Logistic Regression, Random Forest, K-Means, Isolation Forest
+- Scikit-learn
+- Logistic Regression
+- Random Forest
+- K-Means
+- Isolation Forest
+- GridSearchCV
 
-**Visualization:** Power BI, Matplotlib, Seaborn
+### Visualization
 
-**Development:** Jupyter Notebook, VS Code, Git/GitHub
+- Power BI
+- Matplotlib
+- Seaborn
 
-## Key Skills Demonstrated
+### Development
+
+- Jupyter Notebook
+- VS Code
+- Git
+- GitHub
+
+## Machine Learning Techniques
+
+The project demonstrates:
 
 - Data Cleaning
 - Exploratory Data Analysis
-- SQL Analysis
 - Feature Engineering
 - Classification
 - Clustering
@@ -252,8 +291,18 @@ Retail-Transaction-Anomaly-Detection/
 - Cross-Validation
 - Hyperparameter Tuning
 - Model Evaluation
+- Feature Analysis
 - Data Visualization
-- Business Insight Generation
+
+## Business Application
+
+The project demonstrates how machine learning can support retail operations by:
+
+- Identifying high-risk transaction patterns.
+- Detecting unusual store behaviour.
+- Prioritizing high-volume error areas.
+- Supporting workload distribution.
+- Providing data-driven insights for operational teams.
 
 ## How to Run
 
@@ -272,18 +321,23 @@ pip install -r requirements.txt
 
 ### 3. Run the notebooks
 
-Run the notebooks in the following order:
+Run the notebooks in order:
 
 ```text
 01_data_cleaning_eda.ipynb
-        ↓
 02_sql_analysis.ipynb
-        ↓
 03_machine_learning.ipynb
-        ↓
 04_anomaly_detection.ipynb
 ```
 
 ### 4. Open the Power BI dashboard
 
-Open the `.pbix` file from the `dashboard` folder.
+Open:
+
+```text
+dashboard/retail_error_dashboard.pbix
+```
+
+## Conclusion
+
+This project demonstrates an end-to-end data science workflow combining **SQL analysis, exploratory data analysis, feature engineering, supervised learning, clustering, anomaly detection, model evaluation, and Power BI visualization** to address a practical retail transaction-quality problem.
